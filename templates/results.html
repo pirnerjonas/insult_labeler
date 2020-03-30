@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages(with_categories=True)%}
+{% if messages %}
+    {% for category, message in messages %}
+        <div>
+            {{message}}
+        </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+<h1>Task Master</h1>
+<table>
+    <tr>
+        <th>Task</th>
+        <th>Label</th>
+        <th>Change</th>
+    </tr>
+    {% for label in label_data %}
+        <tr>
+            <td>{{ label.content }}</td>
+            <td>{{ label.label }}</td>
+            <td><a href="/change/{{label.id}}">Change</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
