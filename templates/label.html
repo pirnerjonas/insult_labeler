@@ -16,13 +16,68 @@
 {% endif %}
 {% endwith %}
 
-<textarea readonly>
-    {{task.content}}
-</textarea> 
+<div class="container">
+    <div class="row">
+      <div class="col-md-8">
 
-<form action="" method="post">
-    <input type="submit" name = "action" value="Toxic">
-    <input type="submit" name = "action" value="Normal">
-</form>
+        <p><h2>Labeling of Toxic Comments</h2>The data for this project comes from the <strong>Multilingual Toxic Comment Classification Challange</strong>. Here the participants 
+            have to train models to classify toxicity. Toxicity is defined as anything rude, disrespectful or otherwise likely to make someone 
+            leave a discussion. So be prepared for some profane, vulgar, or offensive language. </p> 
+        
+        <p>In this web application built with Flask I tried to implement a slimmed down version of spacy's prodigy. It allows you to annotate
+            200 instances of the test dataset of the competition and stores the results in a database.</p>
+
+
+
+
+        <form action="" method="post">
+            <div class="form-group">
+            <textarea class="form-control" id=formGroupOutput rows=4 readonly>
+                {{insult.Comment}}
+            </textarea> 
+            <br>
+            <div class="form-group">
+                <input type="submit" name = "action" class="btn btn-success btn-lg btn-block" value="Normal">
+            </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" name = "action" class="btn btn-danger btn-lg btn-block" value="Toxic">
+            </div>
+        </form>
+
+        
+        </div>
+        
+
+        <div class="col-md-4">
+            <div class="content-section">
+                <h3>Sidebar</h3>
+                <p class='text-muted'>The Sidebar shows additional information and changes correspondingly during the annotation process</p>
+            
+                  <label for="progress-insult">Percentage of Toxic vs Normal:</label>
+                  <div class="progress" id="progress-insult">
+                      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="{{"width:" ~ perNor ~ "%"}}" aria-valuenow="{{ perNor }}" aria-valuemin="0" aria-valuemax="{{ total }}">{{ perNor }} %</div>
+                      <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style= "{{"width:" ~ perTox ~ "%"}}" aria-valuenow="{{ perTox }}" aria-valuemin="0" aria-valuemax="{{ total }}">{{ perTox }} %</div>
+                  </div>
+                  <br>
+                  <label for="progress">Percentage of labeled data:</label>
+                  <div class="progress" id="progress">
+                      <div class="progress-bar" role="progressbar" style="{{"width:" ~ percentage ~ "%"}}" aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100">{{ percentage }} %</div>
+                  </div>
+            
+              </div>
+        </div>
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
 
 {% endblock %}

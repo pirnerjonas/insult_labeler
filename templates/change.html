@@ -16,11 +16,19 @@
 {% endif %}
 {% endwith %}
 
+<h2>Change an already annotated observation</h2>
+
 <div>
-    <textarea>{{label_to_change.content}}</textarea>
+    <textarea class="form-control" rows=4 readonly>{{label_to_change.content}}</textarea>
+
     <form action="" method="POST">
-        <input type="text" name="label" id="label">
-        <input type="submit" value="Change Label">
+        <div class="form-group">
+            <input type="submit" name = "action" class="btn btn-success btn-lg btn-block" value="Normal">
+        </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" name = "action" class="btn btn-danger btn-lg btn-block" value="Toxic">
+        </div>
     </form>
 </div>
 
