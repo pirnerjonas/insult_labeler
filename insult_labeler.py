@@ -5,8 +5,7 @@ import numpy as np
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '58f2cae6bd981e8433d756d6ec34c1cd'
-# here all 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///insults.db' # three slash relative path
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///insults.db'
 app.config['SQLALCHEMY_BINDS'] = {'label' : 'sqlite:///label.db'}
 db = SQLAlchemy(app)
 
@@ -33,14 +32,12 @@ def index():
     if request.method == 'POST':
         insult_content = request.form['content']
         new_insult = Insult(Comment=insult_content)
-
         try:
             db.session.add(new_insult)
             db.session.commit()
             return redirect('/')
         except:
             return 'There was an issue'
-
     else:
         # load all insults
         insults = Insult.query.order_by(Insult.Date).all()
@@ -52,7 +49,6 @@ def label():
     count_remaining = len(Insult.query.all())
     count_labeled = len(Insult_labeled.query.all())
     percentage = int(count_labeled / (count_labeled+count_remaining))
-
     # statistics
     count_toxic = len(Insult_labeled.query.filter_by(label=1).all())
     count_normal = len(Insult_labeled.query.filter_by(label=0).all())
@@ -84,7 +80,9 @@ def label():
     # first initialization
     else:
         insult = Insult.query.first_or_404()
-        return render_template('label.html', insult=insult, percentage=percentage, perTox=perTox, perNor=perNor, total=total)
+        return render_template('label.html', insult=insult, percentage=percentage, 
+                                perTox=perTox, perNor=perNor, total=total, 
+                                count_labeled=count_labeled)
 
 @app.route('/results')
 def results():
@@ -95,13 +93,10 @@ def results():
 def change(id):
     label_to_change = Insult_labeled.query.get_or_404(id)
     if request.method == 'POST':
-
         if request.form['action'] == 'Toxic':
                 label_to_change.label = 1
         elif request.form['action'] == 'Normal':
                 label_to_change.label = 0
-
-      
         db.session.commit()
         return redirect('/results')
     else:
